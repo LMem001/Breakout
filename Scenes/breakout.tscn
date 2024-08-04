@@ -1,3 +1,57 @@
-[gd_scene format=3 uid="uid://ds1q62ex8xr17"]
+[gd_scene load_steps=7 format=3 uid="uid://ds1q62ex8xr17"]
+
+[ext_resource type="PackedScene" uid="uid://di6wl3o6882ks" path="res://Scenes/player.tscn" id="1_kiknj"]
+[ext_resource type="PackedScene" uid="uid://dudc7nau5a6oo" path="res://Scenes/ball.tscn" id="2_6jtgm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e54ui"]
+size = Vector2(1152, 19)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_opg65"]
+size = Vector2(22.5, 660)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_li81x"]
+size = Vector2(24, 664.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6giwl"]
+size = Vector2(1201, 63)
 
 [node name="Breakout" type="Node2D"]
+
+[node name="Stage" type="CanvasLayer" parent="."]
+layer = -128
+
+[node name="ColorRect" type="ColorRect" parent="Stage"]
+offset_right = 1153.0
+offset_bottom = 644.0
+color = Color(0, 0, 0, 1)
+
+[node name="WallTop" type="StaticBody2D" parent="Stage"]
+position = Vector2(17, 12)
+
+[node name="WallTop" type="CollisionShape2D" parent="Stage/WallTop"]
+position = Vector2(560, -19.5)
+shape = SubResource("RectangleShape2D_e54ui")
+
+[node name="WallsSide" type="StaticBody2D" parent="Stage"]
+position = Vector2(17, 12)
+
+[node name="WallRight" type="CollisionShape2D" parent="Stage/WallsSide"]
+position = Vector2(1147.75, 302)
+shape = SubResource("RectangleShape2D_opg65")
+
+[node name="WallLeft" type="CollisionShape2D" parent="Stage/WallsSide"]
+position = Vector2(-28, 302.75)
+shape = SubResource("RectangleShape2D_li81x")
+
+[node name="Pit" type="Area2D" parent="Stage"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stage/Pit"]
+position = Vector2(581, 678)
+shape = SubResource("RectangleShape2D_6giwl")
+debug_color = Color(0.752941, 0, 0, 0.419608)
+
+[node name="Player" parent="." instance=ExtResource("1_kiknj")]
+position = Vector2(582, 569)
+
+[node name="Ball" parent="." instance=ExtResource("2_6jtgm")]
+position = Vector2(583, 541)

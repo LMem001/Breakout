@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://di6wl3o6882ks"]
+
+[ext_resource type="PackedScene" uid="uid://dmaprlj7jd0gq" path="res://Scenes/pad.tscn" id="1_ixyav"]
+[ext_resource type="Script" path="res://Scenes/player.gd" id="1_yxfpo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oyygn"]
+size = Vector2(139, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6l1ig"]
+size = Vector2(37, 13.875)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ncd26"]
+size = Vector2(51, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_73nm3"]
+size = Vector2(52.3615, 14.3125)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_yxfpo")
+
+[node name="Paddle" parent="." instance=ExtResource("1_ixyav")]
+modulate = Color(0.887418, 1, 0.960057, 1)
+self_modulate = Color(0.324927, 0.321708, 0.312961, 1)
+position = Vector2(-1, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_oyygn")
+
+[node name="CenterArea" type="Area2D" parent="."]
+
+[node name="Collision1" type="CollisionShape2D" parent="CenterArea"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_6l1ig")
+debug_color = Color(0.579879, 0.551717, 0.0341049, 0.42)
+
+[node name="LeftArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftArea"]
+position = Vector2(-43.5, -4.5)
+shape = SubResource("RectangleShape2D_ncd26")
+debug_color = Color(0.827451, 0.137255, 0, 0.419608)
+
+[node name="RightArea" type="Area2D" parent="."]
+
+[node name="Collision2" type="CollisionShape2D" parent="RightArea"]
+position = Vector2(44.1807, -3.84375)
+shape = SubResource("RectangleShape2D_73nm3")
+debug_color = Color(0.89863, 0.314046, 0, 0.42)
