@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://ds1q62ex8xr17"]
+[gd_scene load_steps=9 format=3 uid="uid://ds1q62ex8xr17"]
 
+[ext_resource type="Script" path="res://Scenes/breakout.gd" id="1_5osuv"]
 [ext_resource type="PackedScene" uid="uid://di6wl3o6882ks" path="res://Scenes/player.tscn" id="1_kiknj"]
 [ext_resource type="PackedScene" uid="uid://dudc7nau5a6oo" path="res://Scenes/ball.tscn" id="2_6jtgm"]
+[ext_resource type="PackedScene" uid="uid://cd0uxy0no712d" path="res://Scenes/brick.tscn" id="3_11jse"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e54ui"]
 size = Vector2(1152, 19)
@@ -16,6 +18,7 @@ size = Vector2(24, 664.5)
 size = Vector2(1201, 63)
 
 [node name="Breakout" type="Node2D"]
+script = ExtResource("1_5osuv")
 
 [node name="Stage" type="CanvasLayer" parent="."]
 layer = -128
@@ -53,5 +56,26 @@ debug_color = Color(0.752941, 0, 0, 0.419608)
 [node name="Player" parent="." instance=ExtResource("1_kiknj")]
 position = Vector2(582, 569)
 
+[node name="BallAnchor" type="Node2D" parent="Player"]
+unique_name_in_owner = true
+
 [node name="Ball" parent="." instance=ExtResource("2_6jtgm")]
+unique_name_in_owner = true
 position = Vector2(583, 541)
+
+[node name="GridContainer" type="GridContainer" parent="."]
+custom_minimum_size = Vector2(40, 40)
+offset_left = 3.0
+offset_top = 5.0
+offset_right = 1151.0
+offset_bottom = 147.0
+size_flags_stretch_ratio = 0.0
+
+[node name="Brick" parent="GridContainer" instance=ExtResource("3_11jse")]
+
+[node name="ResetTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[connection signal="area_entered" from="Stage/Pit" to="." method="_on_pit_area_entered"]
+[connection signal="timeout" from="ResetTimer" to="." method="_on_reset_timer_timeout"]

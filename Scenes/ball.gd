@@ -1,49 +1,48 @@
 extends Area2D
 
+@export var Player : NodePath  # Path to the paddle node
+var paddle_node : Node2D
+var ball_anchor : Node2D
 var velocity = Vector2(0, 0)
-var initial_position = Vector2()
 var body_coll
 var x_direction = 230
 var speed = 200
 var lastHitPlayer
+var is_attached : bool = true # attach ball to player
+var start_offset : Vector2 = Vector2(0, -30) 
 
 func _physics_process(delta):
 	# Move
 	position += velocity * delta
 
 func _ready():
-	initial_position = position
+	paddle_node = get_node("/root/Breakout/Player")  # Get the paddle node
+	ball_anchor = paddle_node.get_node("BallAnchor")  # Get the BallAnchor node
 	set_process_unhandled_input(true)
 
 func _process(delta):
 	# Move the ball if the vector is not 0
+	if is_attached:
+		# Position the ball at the BallAnchor position
+		position = ball_anchor.global_position + start_offset
 	if velocity != Vector2(0, 0):
 		position += velocity * delta
 
 func _unhandled_input(event):
 	# Verifica se il tasto "start_game" è premuto e la velocità è zero
-	if event.is_action_pressed("start_game") and velocity == Vector2(0, 0):
+	if event.is_action_pressed("start_game") and is_attached:
 		start_game()
 
 func start_game():
 	# set velocity
+	is_attached = false  # Detach the ball from the paddle
 	velocity = Vector2(x_direction, -230).normalized() * speed
 	print("Gioco iniziato con velocità: ", velocity)
 	
-func reset_ball(direction):
+func reset_ball():
 	# Reset Ball
-	set_x_direction(direction)
-	position = initial_position
 	velocity = Vector2(0, 0)
-
-# var direction: String left or right
-func set_x_direction(direction):
-	# Reset Ball
-	if direction == "right":
-		x_direction = 230
-	else:
-		x_direction = -230
-
+	is_attached = true
 
 func _on_body_entered(body):
 	lastHitPlayer = false
@@ -59,6 +58,7 @@ func _on_body_entered(body):
 		# Invert ball y direction
 		velocity.y = -velocity.y
 
+# manages the collisions with the different parts of the paddle
 func _on_area_entered(area):
 	var area_coll = area.name
 	var inverty = -velocity.y

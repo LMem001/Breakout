@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://cd0uxy0no712d"]
+
+[ext_resource type="Texture2D" uid="uid://dc3m42vvp72wb" path="res://images/brick_blue.png" id="1_ggpod"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3pg0a"]
+size = Vector2(96, 32)
+
+[node name="Brick" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_3pg0a")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -48.0
+offset_top = -16.0
+offset_right = 48.0
+offset_bottom = 16.0
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_right = 96.0
+offset_bottom = 32.0
+texture = ExtResource("1_ggpod")
+stretch_mode = 5
