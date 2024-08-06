@@ -44,6 +44,10 @@ func reset_ball():
 	velocity = Vector2(0, 0)
 	is_attached = true
 
+func decrease_speed():
+	if speed > 50:
+		speed -= 10
+	
 func _on_body_entered(body):
 	lastHitPlayer = false
 	body_coll = body.name
