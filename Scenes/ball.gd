@@ -57,6 +57,10 @@ func _on_body_entered(body):
 		print("Collision With top wall !")
 		# Invert ball y direction
 		velocity.y = -velocity.y
+	elif body_coll.contains("@StaticBody2D") or body_coll == "Brick":
+		body.queue_free()
+		velocity.y = -velocity.y
+		speed += 5
 
 # manages the collisions with the different parts of the paddle
 func _on_area_entered(area):
