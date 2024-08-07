@@ -1,6 +1,8 @@
 extends Area2D
 
-@export var Player : NodePath  # Path to the paddle node
+@export var Game : Node2D  # Path to the breakout node
+@export var Points : Label  # Path to the paddle node
+@export var points : int
 var paddle_node : Node2D
 var ball_anchor : Node2D
 var velocity = Vector2(0, 0)
@@ -14,6 +16,7 @@ var start_offset : Vector2 = Vector2(0, -30)
 func _physics_process(delta):
 	# Move
 	position += velocity * delta
+
 
 func _ready():
 	paddle_node = get_node("/root/Breakout/Player")  # Get the paddle node
@@ -64,6 +67,9 @@ func _on_body_entered(body):
 	elif body_coll.contains("@StaticBody2D") or body_coll == "Brick":
 		body.queue_free()
 		velocity.y = -velocity.y
+		points += speed * 10 / 5
+		Points.text = str(points)
+		Game.substractBrick()
 		speed += 5
 
 # manages the collisions with the different parts of the paddle

@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://ds1q62ex8xr17"]
+[gd_scene load_steps=10 format=3 uid="uid://ds1q62ex8xr17"]
 
 [ext_resource type="Script" path="res://Scenes/breakout.gd" id="1_5osuv"]
 [ext_resource type="PackedScene" uid="uid://di6wl3o6882ks" path="res://Scenes/player.tscn" id="1_kiknj"]
 [ext_resource type="PackedScene" uid="uid://dudc7nau5a6oo" path="res://Scenes/ball.tscn" id="2_6jtgm"]
 [ext_resource type="PackedScene" uid="uid://cd0uxy0no712d" path="res://Scenes/brick.tscn" id="3_11jse"]
+[ext_resource type="FontFile" uid="uid://bvuc4kaap5a8b" path="res://assets/fonts/Kenney Future.ttf" id="5_152cp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e54ui"]
 size = Vector2(1152, 19)
@@ -60,13 +61,26 @@ position = Vector2(582, 569)
 [node name="BallAnchor" type="Node2D" parent="Player"]
 unique_name_in_owner = true
 
-[node name="Ball" parent="." instance=ExtResource("2_6jtgm")]
+[node name="Ball" parent="." node_paths=PackedStringArray("Game", "Points") instance=ExtResource("2_6jtgm")]
 unique_name_in_owner = true
 position = Vector2(583, 541)
+Game = NodePath("..")
+Points = NodePath("../Node2D/Points")
 
 [node name="ResetTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 one_shot = true
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Points" type="Label" parent="Node2D"]
+unique_name_in_owner = true
+offset_left = 37.0
+offset_top = 593.0
+offset_right = 174.0
+offset_bottom = 668.0
+theme_override_fonts/font = ExtResource("5_152cp")
+theme_override_font_sizes/font_size = 30
 
 [connection signal="area_entered" from="Stage/Pit" to="." method="_on_pit_area_entered"]
 [connection signal="timeout" from="ResetTimer" to="." method="_on_reset_timer_timeout"]
