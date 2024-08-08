@@ -4,13 +4,18 @@ extends Node2D
 var rows : int = 4  # Number of rows
 var columns : int = 8  # Number of columns
 var brickNumb : int  # Number of bricks
-var brick_spacing : Vector2 = Vector2(200, 60)  # Spacing between bricks
+var brick_spacing : Vector2 = Vector2(140, 60)  # Spacing between bricks
 var start_position : Vector2 = Vector2(80, 100)  # Starting position for the grid
 var lives = 3
 
 func _ready():
 	generate_bricks()
 	
+func _unhandled_input(event):
+	# Verifica se il tasto "start_game" è premuto e la velocità è zero
+	if event.is_action_pressed("stop_game"):
+		stopGame("Pause", true)
+		
 func generate_bricks():
 	brickNumb = rows * columns
 	for row in range(rows):
@@ -22,16 +27,32 @@ func generate_bricks():
 			
 func substractBrick():
 	brickNumb -= 1
-	if (brickNumb):
-		print("You Win")
+	print(brickNumb)
+	if (brickNumb == 0):
+		stopGame("You Won", false)
+		
 
 func _on_pit_area_entered(area):
 	lives -= 1
 	if(lives > 0):
 		%ResetTimer.start()
 	else: 
-		print("You loose")
+		stopGame("You Loose", false)
 
+func stopGame(label, b_continue):
+	%Pause.visible = true
+	%ContinueButton.visible = b_continue
+	%DescriptionLabel.text = label
+	get_tree().paused = true
+	
 func _on_reset_timer_timeout():
 	%Ball.decrease_speed()
 	%Ball.reset_ball()
+
+func _on_continue_button_pressed():
+	%Pause.visible = false
+	get_tree().paused = false
+
+func _on_restart_button_pressed():
+	get_tree().paused = false
+	get_tree().reload_current_scene()
