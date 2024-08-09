@@ -11,12 +11,11 @@ var x_direction = 230
 var speed = 200
 var lastHitPlayer
 var is_attached : bool = true # attach ball to player
-var start_offset : Vector2 = Vector2(0, -30) 
+var start_offset : Vector2 = Vector2(0, -30)
 
 func _physics_process(delta):
 	# Move
 	position += velocity * delta
-
 
 func _ready():
 	paddle_node = get_node("/root/Breakout/Player")  # Get the paddle node

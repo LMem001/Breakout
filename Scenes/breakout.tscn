@@ -72,15 +72,50 @@ unique_name_in_owner = true
 one_shot = true
 
 [node name="Node2D" type="Node2D" parent="."]
+position = Vector2(82, 585)
 
 [node name="Points" type="Label" parent="Node2D"]
 unique_name_in_owner = true
-offset_left = 37.0
-offset_top = 593.0
-offset_right = 174.0
-offset_bottom = 668.0
+offset_left = -26.0
+offset_top = 5.0
+offset_right = 311.0
+offset_bottom = 50.0
 theme_override_fonts/font = ExtResource("5_152cp")
 theme_override_font_sizes/font_size = 30
+text = "0"
+
+[node name="HighScore" type="Label" parent="Node2D"]
+unique_name_in_owner = true
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 854.0
+offset_top = 12.0
+offset_right = 1071.0
+offset_bottom = 57.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("5_152cp")
+theme_override_font_sizes/font_size = 30
+text = "0"
+
+[node name="HighScoreLabel" type="Label" parent="Node2D"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 618.0
+offset_top = 11.0
+offset_right = 846.0
+offset_bottom = 56.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("5_152cp")
+theme_override_font_sizes/font_size = 30
+text = "High Score:"
 
 [node name="Pause" type="CanvasLayer" parent="."]
 unique_name_in_owner = true

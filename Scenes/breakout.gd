@@ -9,6 +9,7 @@ var start_position : Vector2 = Vector2(80, 100)  # Starting position for the gri
 var lives = 3
 
 func _ready():
+	%HighScore.text = str(SAVELOAD.high_score)
 	generate_bricks()
 	
 func _unhandled_input(event):
@@ -24,27 +25,29 @@ func generate_bricks():
 			var brick_position = start_position + Vector2(col * brick_spacing.x, row * brick_spacing.y)
 			brick_instance.position = brick_position  # Set the position of the brick
 			add_child(brick_instance)  # Add the brick instance to the scene
-			
+
 func substractBrick():
 	brickNumb -= 1
 	print(brickNumb)
 	if (brickNumb == 0):
 		stopGame("You Won", false)
-		
 
+func stopGame(label, b_continue):
+	%Pause.visible = true
+	%ContinueButton.visible = b_continue
+	%DescriptionLabel.text = label
+	if (!b_continue && %Ball.points > SAVELOAD.high_score):
+		SAVELOAD.high_score = %Ball.points
+		SAVELOAD.save_score()
+	get_tree().paused = true
+	
 func _on_pit_area_entered(area):
 	lives -= 1
 	if(lives > 0):
 		%ResetTimer.start()
 	else: 
 		stopGame("You Loose", false)
-
-func stopGame(label, b_continue):
-	%Pause.visible = true
-	%ContinueButton.visible = b_continue
-	%DescriptionLabel.text = label
-	get_tree().paused = true
-	
+		
 func _on_reset_timer_timeout():
 	%Ball.decrease_speed()
 	%Ball.reset_ball()
